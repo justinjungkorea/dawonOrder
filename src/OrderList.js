@@ -62,7 +62,10 @@ const getDateRange = (filter) => {
 };
 
 const OrderList = () => {
-  const [filter, setFilter] = useState("today");
+  const [filter, setFilter] = useState(() => {
+  const currentHour = new Date().getHours();
+  return currentHour < 16 ? "today" : "tomorrow";
+});
   const [sortAsc, setSortAsc] = useState(false);
   const [orders, setOrders] = useState([]);
   const todayFormatted = formatDateHeader(new Date());
@@ -105,7 +108,6 @@ const OrderList = () => {
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
         <Box sx={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
           {[
-            
             { label: "오늘", value: "today" },
             { label: "내일", value: "tomorrow" },
             { label: "이번 주", value: "thisWeek" },
@@ -129,12 +131,13 @@ const OrderList = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              {["업체명", "발주 내용", "배송일", "비고"].map((text, index) => (
-                <TableCell key={index} sx={{ fontSize: "12px", cursor: text === "배송일" ? "pointer" : "default" }}
-                  onClick={text === "배송일" ? () => setSortAsc(!sortAsc) : undefined}>
-                  {text} {text === "배송일" && (sortAsc ? "▲" : "▼")}
-                </TableCell>
-              ))}
+              <TableCell sx={{ fontSize: "12px", width: "20%" }}>업체명</TableCell>
+              <TableCell sx={{ fontSize: "12px", width: "30%" }}>발주 내용</TableCell>
+              <TableCell sx={{ fontSize: "12px", width: "25%", cursor: "pointer" }}
+                onClick={() => setSortAsc(!sortAsc)}>
+                배송일 {sortAsc ? "▲" : "▼"}
+              </TableCell>
+              <TableCell sx={{ fontSize: "12px", width: "25%" }}>비고</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
