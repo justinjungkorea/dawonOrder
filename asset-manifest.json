@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dawonOrder/static/css/main.e6c13ad2.css",
+    "main.js": "/dawonOrder/static/js/main.42f2e987.js",
+    "static/js/488.c8846b23.chunk.js": "/dawonOrder/static/js/488.c8846b23.chunk.js",
+    "index.html": "/dawonOrder/index.html",
+    "main.e6c13ad2.css.map": "/dawonOrder/static/css/main.e6c13ad2.css.map",
+    "main.42f2e987.js.map": "/dawonOrder/static/js/main.42f2e987.js.map",
+    "488.c8846b23.chunk.js.map": "/dawonOrder/static/js/488.c8846b23.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.42f2e987.js"
+  ]
+}
