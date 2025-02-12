@@ -2,7 +2,7 @@
   "name": "dawon-order-list",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://justinjungkorea.github.io/dawonOrder",
+  "homepage":"https://dawon.justinjung.kr",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
