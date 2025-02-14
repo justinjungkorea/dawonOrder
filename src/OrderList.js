@@ -11,7 +11,6 @@ import {
   Paper,
   Box,
   Typography,
-  CircularProgress,
 } from "@mui/material";
 
 const REACT_APP_SHEET_ID = process.env.REACT_APP_SHEET_ID;
@@ -73,11 +72,9 @@ const OrderList = () => {
   });
   const [sortAsc, setSortAsc] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
   const todayFormatted = formatDateHeader(new Date());
 
   const fetchOrders = async () => {
-    setLoading(true);
     try {
       const response = await fetch(SHEET_API_URL);
       const result = await response.json();
@@ -93,12 +90,23 @@ const OrderList = () => {
             remark: row[5] || "",
           };
         });
-        setOrders(formattedOrders);
+        setOrders((prevOrders) => {
+          const updatedOrders = formattedOrders.filter((newOrder) => {
+            const existingOrder = prevOrders.find((order) => order.id === newOrder.id);
+            return (
+              !existingOrder ||
+              existingOrder.company !== newOrder.company ||
+              existingOrder.content !== newOrder.content ||
+              existingOrder.deliveryDate !== newOrder.deliveryDate ||
+              existingOrder.remark !== newOrder.remark
+            );
+          });
+          return updatedOrders.length > 0 ? formattedOrders : prevOrders;
+        });
       }
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -134,37 +142,20 @@ const OrderList = () => {
           {todayFormatted}
         </Typography>
       </Box>
-      {loading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <TableContainer component={Paper} sx={{ maxWidth: "100%", overflowX: "auto" }}>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontSize: "12px", width: "25%" }}>업체명</TableCell>
-                <TableCell sx={{ fontSize: "12px", width: "30%" }}>발주 내용</TableCell>
-                <TableCell sx={{ fontSize: "12px", width: "25%", cursor: "pointer" }}
-                  onClick={() => setSortAsc(!sortAsc)}>
-                  배송일 {sortAsc ? "▲" : "▼"}
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", width: "20%" }}>비고</TableCell>
+      <TableContainer component={Paper} sx={{ maxWidth: "100%", overflowX: "auto" }}>
+        <Table size="small">
+          <TableBody>
+            {sortedOrders.map((order) => (
+              <TableRow key={order.id}>
+                <TableCell sx={{ fontSize: "11px" }}>{order.company}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{formatContent(order.content)}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{order.deliveryDate}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{order.remark}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedOrders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell sx={{ fontSize: "11px" }}>{order.company}</TableCell>
-                  <TableCell sx={{ fontSize: "11px" }}>{formatContent(order.content)}</TableCell>
-                  <TableCell sx={{ fontSize: "11px" }}>{order.deliveryDate}</TableCell>
-                  <TableCell sx={{ fontSize: "11px" }}>{order.remark}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
 };
