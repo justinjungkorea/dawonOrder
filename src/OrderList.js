@@ -48,7 +48,7 @@ const getDateRange = (filter) => {
   }
 };
 
-const formatContent = (content) => content.split(",").map((item, index) => <div key={index}>{item.trim()}</div>);
+const formatContent = (content) => content.split(",").map((item, index) => <div key={index}>-{item.trim()}</div>);
 
 const OrderList = () => {
   const [filter, setFilter] = useState(() => (new Date().getHours() < 16 ? "today" : "tomorrow"));
@@ -121,22 +121,22 @@ const OrderList = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontSize: "12px", width: "25%" }}>업체명</TableCell>
-              <TableCell sx={{ fontSize: "12px", width: "30%" }}>발주 내용</TableCell>
-              <TableCell sx={{ fontSize: "12px", width: "25%", cursor: "pointer" }}
+              <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "25%" }}>업체명</TableCell>
+              <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "30%" }}>발주 내용</TableCell>
+              <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "25%", cursor: "pointer" }}
                 onClick={() => setSortAsc(!sortAsc)}>
                 배송일 {sortAsc ? "▲" : "▼"}
               </TableCell>
-              <TableCell sx={{ fontSize: "12px", width: "20%" }}>비고</TableCell>
+              <TableCell sx={{ fontSize: "12px", fontWeight: "bold",width: "20%" }}>비고</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedOrders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell>{order.company}</TableCell>
-                <TableCell>{formatContent(order.content)}</TableCell>
-                <TableCell>{order.deliveryDate}</TableCell>
-                <TableCell>{order.remark}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{order.company}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{formatContent(order.content)}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{order.deliveryDate}</TableCell>
+                <TableCell sx={{ fontSize: "11px" }}>{order.remark}</TableCell>
               </TableRow>
             ))}
           </TableBody>
