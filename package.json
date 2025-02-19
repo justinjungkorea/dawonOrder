@@ -2,17 +2,19 @@
   "name": "dawon-order-list",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://dawon.justinjung.kr",
+  "homepage": "https://dawon.justinjung.kr",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.4.4",
+    "@mui/material": "^6.4.5",
+    "@mui/x-date-pickers": "^7.27.0",
     "@testing-library/react": "^16.2.0",
     "cra-template": "1.2.0",
+    "date-fns": "^2.29.3",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
