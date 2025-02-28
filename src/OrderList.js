@@ -18,7 +18,7 @@ const parseDeliveryDate = (dateValue) => {
   return isNaN(date.getTime()) ? { display: "-", raw: null } : { display: formatDate(date), raw: date };
 };
 
-const formatContent = (content) => content.split(",").map((item, index) => <div key={index}>- {item.trim()}</div>);
+const formatContent = (content) => content.split(",").map((item, index) => <div key={index}>{index + 1}) {item.trim()}</div>);
 
 const OrderList = () => {
   const defaultDate = new Date();
