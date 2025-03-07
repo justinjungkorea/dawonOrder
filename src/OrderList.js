@@ -58,7 +58,11 @@ const OrderList = () => {
     return () => clearInterval(interval);
   }, [selectedDate]);
 
-  const filteredOrders = orders.filter((order) => order.deliveryDate === formatDate(selectedDate));
+  const filteredOrders = orders.filter(
+    (order) => 
+      order.rawDate && 
+      order.rawDate.toDateString() === selectedDate.toDateString()
+  );
   const sortedOrders = [...filteredOrders].sort((a, b) => (sortAsc ? a.rawDate - b.rawDate : b.rawDate - a.rawDate));
 
   return (
