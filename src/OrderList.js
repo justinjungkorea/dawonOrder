@@ -103,12 +103,12 @@ const OrderList = () => {
               <TableRow>
                 <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "25%" }}>업체명</TableCell>
                 <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "30%" }}>발주 내용</TableCell>
-                <TableCell
+                {/* <TableCell
                   sx={{ fontSize: "12px", fontWeight: "bold", width: "25%", cursor: "pointer" }}
                   onClick={() => setSortAsc(!sortAsc)}
                 >
                   배송일 {sortAsc ? "▲" : "▼"}
-                </TableCell>
+                </TableCell> */}
                 <TableCell sx={{ fontSize: "12px", fontWeight: "bold", width: "20%" }}>비고</TableCell>
               </TableRow>
             </TableHead>
@@ -117,7 +117,7 @@ const OrderList = () => {
                 <TableRow key={order.id}>
                   <TableCell sx={{ fontSize: "11px" }}>{order.company}</TableCell>
                   <TableCell sx={{ fontSize: "11px" }}>{formatContent(order.content)}</TableCell>
-                  <TableCell sx={{ fontSize: "11px" }}>{order.deliveryDate}</TableCell>
+                  {/* <TableCell sx={{ fontSize: "11px" }}>{order.deliveryDate}</TableCell> */}
                   <TableCell sx={{ fontSize: "11px" }}>{order.remark}</TableCell>
                 </TableRow>
               ))}
