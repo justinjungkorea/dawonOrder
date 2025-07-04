@@ -64,7 +64,7 @@ const OrderList = () => {
       })
       .map((order) => ({
         ...order,
-        remark: order.hasDelivered ? "배송완료" : order.remark, // remark 업데이트
+        remark: order.hasDelivered ? "완료" : order.remark, // remark 업데이트
       }));
   };
 
