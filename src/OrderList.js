@@ -43,6 +43,7 @@ const OrderList = () => {
             deliveryDate: parsedDate.display, // 기존 포맷 유지
             rawDate: parsedDate.raw,
             remark: row[5] || "",
+            hasDelivered: row[2] !== 'FALSE' 
           };
         });
         setOrders(formattedOrders);
@@ -50,6 +51,21 @@ const OrderList = () => {
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
+  };
+
+  const sortOrders = (orders) => {
+    return [...orders]
+      .sort((a, b) => {
+        // 배송완료(false 먼저, true 나중)
+        if (a.hasDelivered && !b.hasDelivered) return 1;
+        if (!a.hasDelivered && b.hasDelivered) return -1;
+        // 그 외에는 업체명 ㄱㄴㄷ 오름차순
+        return a.company.localeCompare(b.company, "ko-KR");
+      })
+      .map((order) => ({
+        ...order,
+        remark: order.hasDelivered ? "배송완료" : order.remark, // remark 업데이트
+      }));
   };
 
   useEffect(() => {
@@ -63,7 +79,7 @@ const OrderList = () => {
       order.rawDate && 
       order.rawDate.toDateString() === selectedDate.toDateString()
   );
-  const sortedOrders = [...filteredOrders].sort((a, b) => (sortAsc ? a.rawDate - b.rawDate : b.rawDate - a.rawDate));
+  const sortedOrders = sortOrders(filteredOrders);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
